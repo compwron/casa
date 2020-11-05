@@ -11,8 +11,6 @@ module SidebarHelper
   end
 
   def cases_index_title
-    return "My Cases" if current_user.volunteer?
-
-    "Cases"
+    current_user.volunteer? ? "My Cases" : "Cases"
   end
 end
