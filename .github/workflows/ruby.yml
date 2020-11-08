@@ -42,8 +42,14 @@ jobs:
         PGUSER: postgres
         RAILS_ENV: test
       run: |
+        psql -c 'create database casa_test;' -U postgres
+        psql -c 'create database casa_development;' -U postgres
         bundle install
         bin/rails db:setup
 
     - name: Run rspec
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        RAILS_ENV: test
       run: bundle exec rake
