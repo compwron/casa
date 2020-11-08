@@ -1,4 +1,4 @@
-name: CASA security checker
+name: brakeman
 
 on:
   push:

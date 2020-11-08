@@ -1,4 +1,4 @@
-name: CASA lint
+name: standardrb lint
 
 on:
   push:
