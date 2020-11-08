@@ -1,4 +1,4 @@
-name: CASA lint
+name: CASA security checker
 
 on:
   push:
