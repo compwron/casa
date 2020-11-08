@@ -45,9 +45,8 @@ jobs:
 
     - name: Build App
       env:
-        PGHOST: localhost
-        PGUSER: postgres
-        RAILS_ENV: test
+        POSTGRES_HOST: localhost
+        POSTGRES_PORT: 5432
       run: |
         psql -c 'create database casa_test;' -U postgres
         psql -c 'create database casa_development;' -U postgres
