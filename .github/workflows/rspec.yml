@@ -21,7 +21,8 @@ jobs:
     services:
       db:
         image: postgres:12.3
-        ports: ['5432:5432']
+        ports:
+          - 5432:5432
         env:
           POSTGRES_PASSWORD: password
         options: >-
@@ -31,56 +32,56 @@ jobs:
           --health-retries 5
 
     steps:
-    - uses: actions/checkout
+      - uses: actions/checkout@v2
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7.1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.1
 
-    - name: Install PostgreSQL client
-      run: |
-        sudo apt-get -yqq install libpq-dev
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get -yqq install libpq-dev
 
-    - name: Build App
-      env:
-        POSTGRES_HOST: postgres
-        DATABASE_HOST: postgres
-        POSTGRES_USER: postgres
-        CASA_DATABASE_PASSWORD: password
-        POSTGRES_PASSWORD: password
-        POSTGRES_HOST_AUTH_METHOD: trust
-        POSTGRES_PORT: 5432
-      run: |
-        psql -c 'create database casa_test;' -U postgres
-        psql -c 'create database casa_development;' -U postgres
-        bundle install
-        yarn
-        bin/rails db:setup
-        bundle exec rails webpacker:compile
-        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        chmod +x ./cc-test-reporter
-        ./cc-test-reporter before-build
+      - name: Build App
+        env:
+          POSTGRES_HOST: postgres
+          DATABASE_HOST: postgres
+          POSTGRES_USER: postgres
+          CASA_DATABASE_PASSWORD: password
+          POSTGRES_PASSWORD: password
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_PORT: 5432
+        run: |
+          psql -c 'create database casa_test;' -U postgres
+          psql -c 'create database casa_development;' -U postgres
+          bundle install
+          yarn
+          bin/rails db:setup
+          bundle exec rails webpacker:compile
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter before-build
 
-    - name: Run rspec
-      env:
-        PGHOST: localhost
-        PGUSER: postgres
-        RAILS_ENV: test
-      run: |
-        RUBYOPT='-W:no-deprecated -W:no-experimental' bundle exec rspec
+      - name: Run rspec
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          RAILS_ENV: test
+        run: |
+          RUBYOPT='-W:no-deprecated -W:no-experimental' bundle exec rspec
 
-    - name: Run cypress
-      env:
-        PGHOST: localhost
-        PGUSER: postgres
-        RAILS_ENV: development
-      run: |
-        RUBYOPT='-W:no-deprecated -W:no-experimental' bundle exec rspec
-        RAILS_ENV=test bundle exec rails server -b 0.0.0.0 -p 4040 -d
-        RAILS_ENV=test bundle exec rake db:migrate
-        RAILS_ENV=test bundle exec rake db:seed
-        npm run test:cypress
-        kill $(jobs -p) || true
-        ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+      - name: Run cypress
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          RAILS_ENV: development
+        run: |
+          RUBYOPT='-W:no-deprecated -W:no-experimental' bundle exec rspec
+          RAILS_ENV=test bundle exec rails server -b 0.0.0.0 -p 4040 -d
+          RAILS_ENV=test bundle exec rake db:migrate
+          RAILS_ENV=test bundle exec rake db:seed
+          npm run test:cypress
+          kill $(jobs -p) || true
+          ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
