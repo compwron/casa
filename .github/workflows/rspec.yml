@@ -53,12 +53,6 @@ jobs:
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
 
-    - name: brakeman
-      run: bundle exec brakeman
-
-    - name: lint
-      run: bundle exec standardrb
-
     - name: Run rspec
       env:
         PGHOST: localhost

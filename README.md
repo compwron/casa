@@ -1,6 +1,7 @@
 # CASA Project & Organization Overview
 
-[![Build Status](https://github.com/compwron/casa/workflows/ruby/badge.svg)](https://github.com/compwron/casa/actions)
+![CI](https://github.com/compwron/casa/workflows/rspec%20and%20cypress/badge.svg)
+![lint](https://github.com/compwron/casa/workflows/standardrb%20lint/badge.svg)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=rubyforgood/casa)](https://dependabot.com)
 [![Maintainability](https://api.codeclimate.com/v1/badges/24f3bb10db6afac417e2/maintainability)](https://codeclimate.com/github/rubyforgood/casa/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/24f3bb10db6afac417e2/test_coverage)](https://codeclimate.com/github/rubyforgood/casa/test_coverage)
