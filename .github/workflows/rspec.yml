@@ -44,7 +44,6 @@ jobs:
       run: |
         psql -c 'create database casa_test;' -U postgres
         psql -c 'create database casa_development;' -U postgres
-        npm install yarn
         bundle install
         yarn
         bin/rails db:setup
