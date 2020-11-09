@@ -53,8 +53,8 @@ jobs:
           POSTGRES_HOST_AUTH_METHOD: trust
           POSTGRES_PORT: 5432
         run: |
-          psql -c 'create database casa_test;' -U postgres
-          psql -c 'create database casa_development;' -U postgres
+          psql -c 'create database casa_test;' -U postgres -ppassword
+          psql -c 'create database casa_development;' -U postgres -ppassword
           bundle install
           yarn
           bin/rails db:setup
