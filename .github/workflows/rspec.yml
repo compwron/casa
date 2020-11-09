@@ -57,7 +57,8 @@ jobs:
           yarn
           skylight disable_dev_warning
           bundle exec rake db:create
-          bundle exec rake db:migrate
+          bundle exec rake db:schema:load
+#          bundle exec rake db:migrate
           bundle exec rails webpacker:compile
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter
