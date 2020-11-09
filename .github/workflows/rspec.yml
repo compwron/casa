@@ -23,8 +23,6 @@ jobs:
         image: postgres:12.3
         ports:
           - 5432:5432
-        env:
-          POSTGRES_PASSWORD: password
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -48,13 +46,13 @@ jobs:
           POSTGRES_HOST: postgres
           DATABASE_HOST: postgres
           POSTGRES_USER: postgres
-          CASA_DATABASE_PASSWORD: password
-          POSTGRES_PASSWORD: password
+#          CASA_DATABASE_PASSWORD: password
+#          POSTGRES_PASSWORD: password
           POSTGRES_HOST_AUTH_METHOD: trust
           POSTGRES_PORT: 5432
         run: |
-          psql -c 'create database casa_test;' -U postgres -ppassword
-          psql -c 'create database casa_development;' -U postgres -ppassword
+          psql -c 'create database casa_test;' -U postgres
+          psql -c 'create database casa_development;' -U postgres
           bundle install
           yarn
           bin/rails db:setup
