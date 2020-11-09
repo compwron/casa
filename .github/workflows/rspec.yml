@@ -45,8 +45,8 @@ jobs:
 
       - name: Build App
         env:
-          POSTGRES_HOST: postgres
-          DATABASE_HOST: postgres
+          POSTGRES_HOST: localhost
+          DATABASE_HOST: localhost
           POSTGRES_USER: postgres
           CASA_DATABASE_PASSWORD: password
           POSTGRES_PASSWORD: password
@@ -54,8 +54,8 @@ jobs:
           POSTGRES_PORT: 5432
         run: |
           bundle install
-          yarn
           skylight disable_dev_warning
+          yarn
           bundle exec rake db:create
           bundle exec rake db:schema:load
           bundle exec rails webpacker:compile
@@ -65,8 +65,8 @@ jobs:
 
       - name: Run rspec
         env:
-          POSTGRES_HOST: postgres
-          DATABASE_HOST: postgres
+          POSTGRES_HOST: localhost
+          DATABASE_HOST: localhost
           POSTGRES_USER: postgres
           CASA_DATABASE_PASSWORD: password
           POSTGRES_PASSWORD: password
@@ -80,8 +80,8 @@ jobs:
 
       - name: Run cypress
         env:
-          POSTGRES_HOST: postgres
-          DATABASE_HOST: postgres
+          POSTGRES_HOST: localhost
+          DATABASE_HOST: localhost
           POSTGRES_USER: postgres
           CASA_DATABASE_PASSWORD: password
           POSTGRES_PASSWORD: password
