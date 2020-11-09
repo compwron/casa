@@ -3,7 +3,7 @@ default: &default
   encoding: unicode
   username: <%= ENV.fetch("POSTGRES_USER") { } %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  password: <%= ENV['CASA_DATABASE_PASSWORD'] %>
+  password: password
 
 development:
   <<: *default
