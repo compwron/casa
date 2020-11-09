@@ -55,7 +55,9 @@ jobs:
         run: |
           bundle install
           yarn
-          bin/rails db:setup
+          skylight disable_dev_warning
+          bundle exec rake db:create
+          bundle exec rake db:migrate
           bundle exec rails webpacker:compile
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter
@@ -63,6 +65,13 @@ jobs:
 
       - name: Run rspec
         env:
+          POSTGRES_HOST: postgres
+          DATABASE_HOST: postgres
+          POSTGRES_USER: postgres
+          CASA_DATABASE_PASSWORD: password
+          POSTGRES_PASSWORD: password
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_PORT: 5432
           PGHOST: localhost
           PGUSER: postgres
           RAILS_ENV: test
@@ -71,9 +80,13 @@ jobs:
 
       - name: Run cypress
         env:
-          PGHOST: localhost
-          PGUSER: postgres
-          RAILS_ENV: development
+          POSTGRES_HOST: postgres
+          DATABASE_HOST: postgres
+          POSTGRES_USER: postgres
+          CASA_DATABASE_PASSWORD: password
+          POSTGRES_PASSWORD: password
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_PORT: 5432
         run: |
           RUBYOPT='-W:no-deprecated -W:no-experimental' bundle exec rspec
           RAILS_ENV=test bundle exec rails server -b 0.0.0.0 -p 4040 -d
